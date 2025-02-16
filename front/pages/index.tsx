@@ -1,5 +1,6 @@
 import { useState } from "react";
 import localFont from "next/font/local";
+import Button from "../components/Button"; // Import the Button component
 
 const geistSans = localFont({
   src: "./Geist.ttf",
@@ -57,12 +58,36 @@ export default function Home({}) {
 
   return (
     <div className={`${geistSans.className}`}>
-      <h1 className="text-3xl font-bold mb-4">Data from Spring Boot</h1>
-      {data.message && <p className="text-lg mb-2">{data.message}</p>}
+      <h1 className="text-2xl font-bold mb-4">
+        Cash Position Trigger Flag Update
+      </h1>
+      {data.message && (
+        <p className={`text-lg mb-2 text-amber-400 ${geistMono.className}`}>
+          {data.message}
+        </p>
+      )}
       {data.cobDate && (
         <div>
-          <p className="text-lg mb-2">COB Date {data.cobDate}</p>
-          <p className="text-lg mb-2">Current Trigger Flag {data.triggerFlag}</p>
+          <table className="min-w-5 divide-y divide-gray-200">
+            <tbody>
+              <tr className="bg-gray-50">
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                  COB Date
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  {data.cobDate}
+                </td>
+              </tr>
+              <tr className="bg-white">
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                  Current Trigger Flag
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  {data.triggerFlag}
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       )}
       <div>
@@ -72,8 +97,8 @@ export default function Home({}) {
           onChange={(e) => setDate(e.target.value)}
           className="p-2 text-lg border border-gray-300 rounded mr-2" // Tailwind CSS classes
         />
-        <button onClick={handleRefresh} className="p-2 px-4 text-lg text-white bg-blue-500 border-none rounded cursor-pointer mr-2 hover:bg-blue-700">Refresh</button>
-        <button onClick={handleSubmit} className="p-2 px-4 text-lg text-white bg-blue-500 border-none rounded cursor-pointer hover:bg-blue-700">Submit</button>
+        <Button onClick={handleRefresh}>Get Current</Button>
+        <Button onClick={handleSubmit}>Enable Cash Posting</Button>
       </div>
     </div>
   );
