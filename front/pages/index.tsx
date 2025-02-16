@@ -66,31 +66,7 @@ export default function Home({}) {
           {data.message}
         </p>
       )}
-      {data.cobDate && (
-        <div>
-          <table className="min-w-5 divide-y divide-gray-200">
-            <tbody>
-              <tr className="bg-gray-50">
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                  COB Date
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {data.cobDate}
-                </td>
-              </tr>
-              <tr className="bg-white">
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                  Current Trigger Flag
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {data.triggerFlag}
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      )}
-      <div>
+      <div className="px-2 mb-2">
         <input
           type="date"
           value={date}
@@ -100,6 +76,30 @@ export default function Home({}) {
         <Button onClick={handleRefresh}>Get Current</Button>
         <Button onClick={handleSubmit}>Enable Cash Posting</Button>
       </div>
+      {data.cobDate && (
+        <div>
+          <table className="min-w-5 divide-y divide-gray-100">
+            <tbody>
+              <tr className="bg-gray-100">
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                  COB Date
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  {data.cobDate}
+                </td>
+              </tr>
+              <tr className="bg-white">
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                  Trigger Flag
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  {data.triggerFlag}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 }
