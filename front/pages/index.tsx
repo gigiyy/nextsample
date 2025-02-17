@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Button from "../components/Button"; // Import the Button component
+import CashPosting from "@/components/CashPosting";
 
 export default function Home({}) {
   const [data, setData] = useState({
@@ -60,37 +61,7 @@ export default function Home({}) {
         <Button onClick={handleRefresh}>Get Current</Button>
         <Button onClick={handleSubmit}>Enable Cash Posting</Button>
       </div>
-      <div>
-        {data.message && (
-          <p className="text-lg mb-2 text-amber-400 font-mono">
-            {data.message}
-          </p>
-        )}
-        {data.cobDate && (
-          <div>
-            <table className="min-w-5 divide-y divide-gray-100">
-              <tbody>
-                <tr className="bg-gray-100">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                    COB Date
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {data.cobDate}
-                  </td>
-                </tr>
-                <tr className="bg-white">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                    Trigger Flag
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {data.triggerFlag}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        )}
-      </div>
+      <CashPosting {...data} />
     </div>
   );
 }
