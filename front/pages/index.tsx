@@ -1,16 +1,5 @@
 import { useState } from "react";
-import localFont from "next/font/local";
 import Button from "../components/Button"; // Import the Button component
-
-const geistSans = localFont({
-  src: "./Geist.ttf",
-  variable: "--font-geist-sans",
-});
-
-const geistMono = localFont({
-  src: "./GeistMono.ttf",
-  variable: "--font-geist-mono",
-});
 
 export default function Home({}) {
   const [data, setData] = useState({
@@ -57,15 +46,10 @@ export default function Home({}) {
   };
 
   return (
-    <div className={`${geistSans.className}`}>
+    <div>
       <h1 className="text-2xl font-bold mb-4">
         Cash Position Trigger Flag Update
       </h1>
-      {data.message && (
-        <p className={`text-lg mb-2 text-amber-400 ${geistMono.className}`}>
-          {data.message}
-        </p>
-      )}
       <div className="px-2 mb-2">
         <input
           type="date"
@@ -76,30 +60,37 @@ export default function Home({}) {
         <Button onClick={handleRefresh}>Get Current</Button>
         <Button onClick={handleSubmit}>Enable Cash Posting</Button>
       </div>
-      {data.cobDate && (
-        <div>
-          <table className="min-w-5 divide-y divide-gray-100">
-            <tbody>
-              <tr className="bg-gray-100">
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                  COB Date
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {data.cobDate}
-                </td>
-              </tr>
-              <tr className="bg-white">
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                  Trigger Flag
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {data.triggerFlag}
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      )}
+      <div>
+        {data.message && (
+          <p className="text-lg mb-2 text-amber-400 font-mono">
+            {data.message}
+          </p>
+        )}
+        {data.cobDate && (
+          <div>
+            <table className="min-w-5 divide-y divide-gray-100">
+              <tbody>
+                <tr className="bg-gray-100">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    COB Date
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {data.cobDate}
+                  </td>
+                </tr>
+                <tr className="bg-white">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    Trigger Flag
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {data.triggerFlag}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
