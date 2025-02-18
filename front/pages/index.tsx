@@ -51,7 +51,7 @@ export default function Home({}) {
       <h1 className="text-2xl font-bold mb-4">
         Cash Position Trigger Flag Update
       </h1>
-      <div className="px-2 mb-2">
+      <div className="p-2">
         <input
           type="date"
           value={date}

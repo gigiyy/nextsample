@@ -8,7 +8,7 @@ interface CashPostingProps {
 
 const CashPosting: React.FC<CashPostingProps> = ({ message, cobDate, triggerFlag }) => {
   return (
-    <div>
+    <div className='p-2'>
       {message && (
         <p className="text-lg mb-2 text-amber-400 font-mono">
           {message}
