@@ -16,7 +16,7 @@ const CashPosting: React.FC<CashPostingProps> = ({ message, cobDate, triggerFlag
       )}
       {cobDate && (
         <div>
-          <table className="min-w-full divide-y divide-gray-100">
+          <table className="min-w-40 divide-y divide-gray-100">
             <tbody>
               <tr className="bg-gray-100">
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
