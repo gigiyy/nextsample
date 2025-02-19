@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Button from "../components/Button"; // Import the Button component
 import CashPosting from "@/components/CashPosting";
+import Link from "next/link";
 
 export default function Home({}) {
   const [data, setData] = useState({
@@ -51,6 +52,9 @@ export default function Home({}) {
       <h1 className="text-2xl font-bold mb-4">
         Cash Position Trigger Flag Update
       </h1>
+      <Link href="/hello" className="text-blue-500">
+        Hello
+      </Link>
       <div className="p-2">
         <input
           type="date"
