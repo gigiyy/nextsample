@@ -1,18 +1,16 @@
 package com.example.demo.dtr;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.RecordNotfoundException;
-
-import io.micrometer.common.lang.Nullable;
-
-import org.springframework.web.bind.annotation.GetMapping;
 
 @RestController
 @RequestMapping("/dtr")
@@ -22,11 +20,8 @@ public class DtrController {
     private DtrService dtrService;
 
     @GetMapping("/cashPosting")
-    public CashPostingStatus getMethodName(@RequestParam @Nullable LocalDate cobDate) {
-        if (cobDate == null) {
-            cobDate = LocalDate.now();
-        }
-        return dtrService.getCashPosting(cobDate)
+    public CashPostingStatus getMethodName(@RequestParam Optional<LocalDate> cobDate) {
+        return dtrService.getCashPosting(cobDate.orElse(LocalDate.now()))
                 .orElseThrow(() -> new RecordNotfoundException("No record for the specified COB Date!"));
     }
 

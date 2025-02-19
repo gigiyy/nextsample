@@ -10,10 +10,11 @@ cd front
 npm run dev
 ```
 then make changes and see the changes takes effect in realtime.
-## release steps
+## production build
 
-run below script
+at project root:
 ```sh
-./build.sh
+mvn [clean] install
+java -jar back/target/back-0.0.1-SNAPSHOT.jar
 ```
 use the create fat jar file `app.jar` for release
