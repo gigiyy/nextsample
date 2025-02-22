@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.base.RecordNotfoundException;
 
 @RestController
-@RequestMapping("/dtr")
+@RequestMapping("/api/dtr")
 public class DtrController {
 
     @Autowired

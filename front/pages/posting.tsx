@@ -16,7 +16,7 @@ export default function Home({}) {
       setDate(new Date().toISOString().split("T")[0]);
     }
     const res = await fetch(
-      `/dtr/cashPosting?cobDate=${encodeURIComponent(date)}`,
+      `/api/dtr/cashPosting?cobDate=${encodeURIComponent(date)}`,
       {
         method: "GET",
         headers: {
@@ -30,7 +30,7 @@ export default function Home({}) {
   const handleSubmit = async () => {
     console.log(date);
     const res = await fetch(
-      `/dtr/cashPosting?cobDate=${encodeURIComponent(date)}`,
+      `/api/dtr/cashPosting?cobDate=${encodeURIComponent(date)}`,
       {
         method: "PUT",
         headers: {
