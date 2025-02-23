@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.base.RecordNotfoundException;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestController
 @RequestMapping("/api/dtr")
 public class DtrController {
@@ -21,12 +24,14 @@ public class DtrController {
 
     @GetMapping("/cashPosting")
     public CashPostingStatus getMethodName(@RequestParam Optional<LocalDate> cobDate) {
+        log.info("getting cash posting status for cobDate: {}", cobDate.orElse(LocalDate.now()));
         return dtrService.getCashPosting(cobDate.orElse(LocalDate.now()))
                 .orElseThrow(() -> new RecordNotfoundException("No record for the specified COB Date!"));
     }
 
     @PutMapping("/cashPosting")
     public CashPostingStatus enableCashPosting(@RequestParam LocalDate cobDate) {
+        log.info("enabling cash posting for cobDate: {}", cobDate);
         return dtrService.enableCashPosting(cobDate)
                 .orElseThrow(() -> new RecordNotfoundException("No record for the specified COB Date!"));
     }
