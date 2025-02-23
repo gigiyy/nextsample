@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Button from "../components/Button"; // Import the Button component
 import CashPosting from "@/components/CashPosting";
+import Cookies from "js-cookie";
 
 export default function Home({}) {
   const [data, setData] = useState({
@@ -28,6 +29,8 @@ export default function Home({}) {
     setData(newData);
   };
   const handleSubmit = async () => {
+    const csrfToken = Cookies.get("XSRF-TOKEN");
+
     console.log(date);
     const res = await fetch(
       `/api/dtr/cashPosting?cobDate=${encodeURIComponent(date)}`,
@@ -35,6 +38,7 @@ export default function Home({}) {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          "X-XSRF-TOKEN": csrfToken ?? "",
         },
       }
     );
