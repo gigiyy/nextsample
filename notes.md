@@ -8,9 +8,14 @@ security
 
 https://baubaubau.hatenablog.com/entry/2021/03/03/210944
 
+CSRF
+
+https://docs.spring.io/spring-security/reference/servlet/integrations/mvc.html#mvc-csrf-resolver
+
 ## keycloak
 
 ```sh
 docker run --name keycloak -d -p 8090:8080 -e KC_BOOTSTRAP_ADMIN_USERNAME=admin -e KC_BOOTSTRAP_ADMIN_PASSWORD=admin quay.io/keycloak/keycloak:26.1.2 start-dev
 ```
 
+https://developers.redhat.com/articles/2023/07/24/how-integrate-spring-boot-3-spring-security-and-keycloak#
