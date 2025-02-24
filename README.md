@@ -12,11 +12,15 @@ run keycloak container and setup realm and clients.
 
 ## development
 
+we'll run front and back separately, so that we can harness the live-reload features of both.
+
+_noted that spring security will be disabled with dev profile for conveniences_
+
 run backend
 
 ```sh
 cd back
-mvn spring-boot:run
+mvn spring-boot:run -Dspring-boot.run.profiles=dev
 ```
 
 run frontend

@@ -32,6 +32,9 @@ export default function Home({}) {
     const res = await fetch("/csrf", {
       credentials: 'include',
     });
+    if (!res.ok) {
+      return "";
+    }
     const data = await res.json();
     return data.token;
   }
