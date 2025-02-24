@@ -1,3 +1,15 @@
+# Simple static Next.JS App
+
+A sample application developed using below stack:
+
+- frontend: next.js, built as static files
+- backend: Spring boot, also serve the static UI
+- keycloak: provide OIDC Authz requirements
+
+## keycloak
+
+run keycloak container and setup realm and clients.
+
 ## development
 
 run backend
