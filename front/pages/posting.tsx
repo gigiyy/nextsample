@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Button from "../components/Button"; // Import the Button component
 import CashPosting from "@/components/CashPosting";
+import axios from "axios";
 
 export default function Home({}) {
   const [data, setData] = useState({
@@ -8,53 +9,43 @@ export default function Home({}) {
     cobDate: "",
     triggerFlag: "",
   });
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
 
   const handleRefresh = async () => {
-    console.log(date);
-    if (!date) {
-      setDate(new Date().toISOString().split("T")[0]);
-    }
-    const res = await fetch(
-      `/api/dtr/cashPosting?cobDate=${encodeURIComponent(date)}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    const newData = await res.json();
-    setData(newData);
+    axios
+      .get("/api/dtr/cashPosting", {
+        params: { cobDate: date },
+      })
+      .then((res) => {
+        setData(res.data);
+      })
+      .catch((err) => {
+        setData(err.response.data);
+      });
   };
 
   const getCsrfToken = async () => {
-    const res = await fetch("/csrf", {
-      credentials: 'include',
-    });
-    if (!res.ok) {
-      return "";
-    }
-    const data = await res.json();
-    return data.token;
-  }
+    return await axios
+      .get("/csrf", {
+        withCredentials: true,
+      })
+      .then((res) => res.data.token)
+      .catch(() => "");
+  };
 
   const handleSubmit = async () => {
     const csrfToken = await getCsrfToken();
-
-    console.log(date);
-    const res = await fetch(
-      `/api/dtr/cashPosting?cobDate=${encodeURIComponent(date)}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          "X-CSRF-TOKEN": csrfToken ?? "",
-        },
-      }
-    );
-    const newData = await res.json();
-    setData(newData);
+    axios
+      .put("/api/dtr/cashPosting", null, {
+        params: { cobDate: date },
+        headers: { "X-CSRF-Token": csrfToken },
+      })
+      .then((res) => {
+        setData(res.data);
+      })
+      .catch((err) => {
+        setData(err.response.data);
+      });
   };
 
   return (
