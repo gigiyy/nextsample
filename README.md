@@ -14,7 +14,9 @@ run keycloak container and setup realm and clients.
 
 we'll run front and back separately, so that we can harness the live-reload features of both.
 
-_noted that spring security will be disabled with dev profile for conveniences_
+`dev` profile was used to disable or enable some of the features for the conveniences of development and testing
+- spring security was disabled as the authentication and authorization model would be different(?need confirm)
+- additional http connector at port 8080 is enabled along with https (8443)
 
 run backend
 
@@ -45,3 +47,5 @@ java -jar back/target/back-0.0.1-SNAPSHOT.jar
 ```
 
 use the create fat jar file `app.jar` for release
+
+keep in mind to set the environment variables according to `env.template` file
