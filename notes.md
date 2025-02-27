@@ -18,6 +18,12 @@ Self signed certificate
 keytool -genkeypair -alias springboot -keyalg RSA -keysize 4096 -keystore springboot.p12 -validity 3650 -storepass password
 ```
 
+discoverable custom config items
+
+https://stackoverflow.com/questions/32058814/spring-boot-custom-variables-in-application-properties
+
+https://docs.spring.io/spring-boot/reference/features/external-config.html#features.external-config.typesafe-configuration-properties
+
 ## keycloak
 
 ```sh
