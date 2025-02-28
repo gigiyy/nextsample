@@ -12,24 +12,24 @@ public class CarServices {
 
     public boolean insertCustomerId(String customerId) {
         String select = "select count(*) from app_id where id_type = 'customerid' and id_value = ?";
-        int found = jdbcClient.sql(select).param(customerId).query(Integer.class).single();
-        if (found > 0) {
-            return false;
-        }
         String insert = "insert into app_id values ('customerid', ?)";
-        int count = jdbcClient.sql(insert).param(customerId).update();
-        return count == 1;
+        return checkAndInsert(select, insert, customerId);
     }
 
     public boolean insertAccountId(String accountId) {
         String select = "select count(*) from app_id where id_type = 'accountid' and id_value = ?";
-        int found = jdbcClient.sql(select).param(accountId).query(Integer.class).single();
+        String insert = "insert into app_id values ('accountid', ?)";
+        return checkAndInsert(select, insert, accountId);
+    }
+
+    private boolean checkAndInsert(String select, String insert, String newId) {
+        int found = jdbcClient.sql(select).param(newId).query(Integer.class).single();
         if (found > 0) {
             return false;
+        } else {
+            int count = jdbcClient.sql(insert).param(newId).update();
+            return count == 1;
         }
-        String insert = "insert into app_id values ('accountid', ?)";
-        int count = jdbcClient.sql(insert).param(accountId).update();
-        return count == 1;
     }
 
 }

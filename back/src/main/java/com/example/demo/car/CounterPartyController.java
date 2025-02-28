@@ -17,11 +17,13 @@ public class CounterPartyController {
     @PostMapping("/counterParty")
     public InsertResults addCustomerId(@RequestBody CounterPartyInfo info) {
         InsertResults results = new InsertResults();
-        if (StringUtils.hasLength(info.getCustomerId())) {
-            results.makeResult(carServices.insertCustomerId(info.getCustomerId()), "Customer ID");
+        String customerId = info.getCustomerId();
+        if (StringUtils.hasLength(customerId)) {
+            results.makeResult(carServices.insertCustomerId(info.getCustomerId()), "Customer ID " + customerId);
         }
-        if (StringUtils.hasLength(info.getAccountId())) {
-            results.makeResult(carServices.insertAccountId(info.getAccountId()), "Account ID");
+        String accountId = info.getAccountId();
+        if (StringUtils.hasLength(accountId)) {
+            results.makeResult(carServices.insertAccountId(info.getAccountId()), "Account ID " + accountId);
         }
         return results;
     }
