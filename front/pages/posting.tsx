@@ -9,12 +9,14 @@ export default function Home({}) {
     cobDate: "",
     triggerFlag: "",
   });
-  const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
+  const [date, setDate] = useState("");
 
-  const handleRefresh = async () => {
+  const handleRefresh = async (selected:string) => {
+    if (!selected) return;
+    setDate(selected);
     axios
       .get("/api/dtr/cashPosting", {
-        params: { cobDate: date },
+        params: { cobDate: selected },
       })
       .then((res) => {
         setData(res.data);
@@ -26,7 +28,7 @@ export default function Home({}) {
 
   const getCsrfToken = async () => {
     return await axios
-      .get("/csrf", {
+      .get("/api/csrf", {
         withCredentials: true,
       })
       .then((res) => res.data.token)
@@ -57,10 +59,9 @@ export default function Home({}) {
         <input
           type="date"
           value={date}
-          onChange={(e) => setDate(e.target.value)}
+          onChange={(e) => handleRefresh(e.target.value)}
           className="p-2 text-lg border border-gray-300 rounded mr-2" // Tailwind CSS classes
         />
-        <Button onClick={handleRefresh}>Get Current</Button>
         <Button onClick={handleSubmit}>Enable Cash Posting</Button>
       </div>
       <CashPosting {...data} />
