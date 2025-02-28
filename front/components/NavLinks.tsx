@@ -12,8 +12,8 @@ const NavLinks: React.FC = () => {
           </Link>
         </li>
         <li className="mb-1">
-          <Link href="/hello" className="text-blue-500 hover:underline">
-            Hello
+          <Link href="/party" className="text-blue-500 hover:underline">
+            Counter Party
           </Link>
         </li>
         <li className="mb-1">

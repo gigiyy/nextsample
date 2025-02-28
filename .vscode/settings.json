@@ -3,5 +3,8 @@
     "java.compile.nullAnalysis.mode": "automatic",
     "files.watcherExclude": {
         "**/target": true
-    }
+    },
+    "cSpell.words": [
+        "jdbc"
+    ]
 }
