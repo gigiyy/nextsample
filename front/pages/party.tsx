@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { getCsrfToken } from "@/services/csrfService";
 import axios from "axios";
+import { FormEvent, useState } from "react";
 
 export default function Home({}) {
   const [data, setData] = useState({
@@ -9,16 +10,7 @@ export default function Home({}) {
   const [customerId, setCustomerId] = useState("");
   const [accountId, setAccountId] = useState("");
 
-  const getCsrfToken = async () => {
-    return await axios
-      .get("/api/csrf", {
-        withCredentials: true,
-      })
-      .then((res) => res.data.token)
-      .catch(() => "");
-  };
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const csrfToken = await getCsrfToken();
     axios

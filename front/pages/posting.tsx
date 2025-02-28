@@ -1,7 +1,8 @@
-import { useState } from "react";
-import Button from "../components/Button"; // Import the Button component
+import Button from "@/components/Button";
 import CashPosting from "@/components/CashPosting";
+import { getCsrfToken } from "@/services/csrfService";
 import axios from "axios";
+import { useState } from "react";
 
 export default function Home({}) {
   const [data, setData] = useState({
@@ -24,15 +25,6 @@ export default function Home({}) {
       .catch((err) => {
         setData(err.response.data);
       });
-  };
-
-  const getCsrfToken = async () => {
-    return await axios
-      .get("/api/csrf", {
-        withCredentials: true,
-      })
-      .then((res) => res.data.token)
-      .catch(() => "");
   };
 
   const handleSubmit = async () => {
