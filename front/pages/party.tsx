@@ -1,3 +1,5 @@
+import FailureMessages from "@/components/failure";
+import SuccessMessages from "@/components/success";
 import { getCsrfToken } from "@/services/csrfService";
 import axios from "axios";
 import { FormEvent, useState } from "react";
@@ -65,28 +67,10 @@ export default function Home({}) {
       </form>
       <div className="mt-4 max-w-lg">
         {data && data.success && data.success.length > 0 && (
-          <div className="bg-green-100 p-4 rounded mb-4">
-            <h2 className="text-lg font-bold mb-2">Success</h2>
-            <ul>
-              {data.success.map((message, index) => (
-                <li key={index} className="text-green-700">
-                  {message}
-                </li>
-              ))}
-            </ul>
-          </div>
+          <SuccessMessages messages={data.success} />
         )}
         {data && data.failure && data.failure.length > 0 && (
-          <div className="bg-red-100 p-4 rounded">
-            <h2 className="text-lg font-bold mb-2">Failure</h2>
-            <ul>
-              {data.failure.map((message, index) => (
-                <li key={index} className="text-red-700">
-                  {message}
-                </li>
-              ))}
-            </ul>
-          </div>
+          <FailureMessages messages={data.failure} />
         )}
       </div>
     </div>

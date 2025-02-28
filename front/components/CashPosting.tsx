@@ -1,4 +1,5 @@
-import React from 'react';
+import React from "react";
+import FailureMessages from "./failure";
 
 interface CashPostingProps {
   message: string;
@@ -6,14 +7,13 @@ interface CashPostingProps {
   triggerFlag: string;
 }
 
-const CashPosting: React.FC<CashPostingProps> = ({ message, cobDate, triggerFlag }) => {
+const CashPosting: React.FC<CashPostingProps> = ({
+  message,
+  cobDate,
+  triggerFlag,
+}) => {
   return (
-    <div className='p-2'>
-      {message && (
-        <p className="text-lg mb-2 text-amber-400 font-mono">
-          {message}
-        </p>
-      )}
+    <div className="p-2">
       {cobDate && (
         <div>
           <table className="min-w-40 divide-y divide-gray-100">
@@ -38,6 +38,9 @@ const CashPosting: React.FC<CashPostingProps> = ({ message, cobDate, triggerFlag
           </table>
         </div>
       )}
+      <div className="mt-4 max-w-lg">
+      {message && <FailureMessages messages={[message]} />}
+      </div>
     </div>
   );
 };
