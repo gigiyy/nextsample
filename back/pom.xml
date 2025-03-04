@@ -119,13 +119,31 @@
 							<outputDirectory>${basedir}/target/classes/static</outputDirectory>
 							<resources>
 								<resource>
-									<directory>${basedir}/../front/out</directory>
+									<directory>${project.parent.basedir}/front/out</directory>
 									<filtering>false</filtering>
 								</resource>
 							</resources>
 						</configuration>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>properties</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<argLine>-javaagent:${org.mockito:mockito-core:jar} -javaagent:${net.bytebuddy:byte-buddy-agent:jar}</argLine>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
