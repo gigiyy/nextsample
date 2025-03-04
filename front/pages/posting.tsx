@@ -1,18 +1,20 @@
 import Button from "@/components/Button";
 import CashPosting from "@/components/CashPosting";
+import MessagesDiv from "@/components/messages";
 import { getCsrfToken } from "@/services/csrfService";
+import { warn } from "@/types/message";
 import axios from "axios";
 import { useState } from "react";
 
 export default function Home({}) {
   const [data, setData] = useState({
-    message: "Please choose a date",
+    messages: [warn("Please choose a date")],
     cobDate: "",
     triggerFlag: "",
   });
   const [date, setDate] = useState("");
 
-  const handleRefresh = async (selected:string) => {
+  const handleRefresh = async (selected: string) => {
     if (!selected) return;
     setDate(selected);
     axios
@@ -57,6 +59,7 @@ export default function Home({}) {
         <Button onClick={handleSubmit}>Enable Cash Posting</Button>
       </div>
       <CashPosting {...data} />
+      <MessagesDiv messages={data?.messages} />
     </div>
   );
 }

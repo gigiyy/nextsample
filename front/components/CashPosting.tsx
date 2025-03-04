@@ -1,17 +1,11 @@
 import React from "react";
-import FailureMessages from "./failure";
 
 interface CashPostingProps {
-  message: string;
   cobDate: string;
   triggerFlag: string;
 }
 
-const CashPosting: React.FC<CashPostingProps> = ({
-  message,
-  cobDate,
-  triggerFlag,
-}) => {
+const CashPosting: React.FC<CashPostingProps> = ({ cobDate, triggerFlag }) => {
   return (
     <div className="p-2">
       {cobDate && (
@@ -38,9 +32,6 @@ const CashPosting: React.FC<CashPostingProps> = ({
           </table>
         </div>
       )}
-      <div className="mt-4 max-w-lg">
-      {message && <FailureMessages messages={[message]} />}
-      </div>
     </div>
   );
 };

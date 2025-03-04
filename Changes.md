@@ -1,0 +1,15 @@
+# Top 5 Most Significant Changes in the Project
+
+After analyzing the project files and commit history, here are the 5 most significant changes (excluding the initial commit):
+
+1. Integration of Spring Boot with Next.js
+   This change established the core architecture of the application by integrating a Next.js frontend with a Spring Boot backend. The implementation includes configuration for building the Next.js application as static files and serving them through the Spring Boot application. The Maven build process was configured to compile the Next.js frontend and copy the output to the Spring Boot static resources directory, creating a unified deployment artifact. This architecture allows for a modern React-based frontend while leveraging Spring Boot's robust backend capabilities.
+2. Implementation of Security Features
+   The addition of comprehensive security features represents a significant enhancement to the application. This includes Spring Security integration with OAuth2/OIDC authentication via Keycloak, CSRF protection, and proper security configuration for both development and production environments. The security implementation includes a dedicated CSRF token endpoint, security filter chains, and configuration for secure HTTPS connections with SSL certificates.
+3. Database Integration with JPA and JDBC
+   This change introduced database functionality using Spring Data JPA and JDBC Client for data access. The implementation includes entity models, repository interfaces, and service layers for different business domains (DTR and CAR modules). The database schema was defined with appropriate tables and relationships, and sample data was provided through SQL scripts. This change established the foundation for persistent data storage and retrieval in the application.
+4. UI Component System and Layout Framework
+   The development of a comprehensive UI component system using React and Tailwind CSS represents a significant frontend enhancement. This includes the creation of reusable components like Button, Layout, NavLinks, and message displays (SuccessMessages and FailureMessages). The implementation of a consistent layout system with navigation and responsive design patterns established a cohesive user experience across the application.
+5. API Integration Between Frontend and Backend
+   This change implemented the communication layer between the frontend and backend through RESTful APIs. The implementation includes axios-based API clients on the frontend, controller endpoints on the backend, and proper error handling on both sides. The API integration supports features like cash posting management and counter party information handling, with appropriate data transfer objects and validation. This change established the foundation for all data exchange between the frontend and backend components.
+   Each of these changes contributed significantly to the overall architecture and functionality of the application, establishing a modern, secure, and maintainable full-stack application.

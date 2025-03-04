@@ -32,8 +32,9 @@ public class DtrController {
     @PutMapping("/cashPosting")
     public CashPostingStatus enableCashPosting(@RequestParam LocalDate cobDate) {
         log.info("enabling cash posting for cobDate: {}", cobDate);
-        return dtrService.enableCashPosting(cobDate)
+        CashPostingStatus result = dtrService.enableCashPosting(cobDate)
                 .orElseThrow(() -> new RecordNotfoundException("No record for the specified COB Date!"));
+        return result.ok("Cash posting updated for " + cobDate);
     }
 
 }

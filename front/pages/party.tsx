@@ -1,13 +1,11 @@
-import FailureMessages from "@/components/failure";
-import SuccessMessages from "@/components/success";
+import MessagesDiv from "@/components/messages";
 import { getCsrfToken } from "@/services/csrfService";
 import axios from "axios";
 import { FormEvent, useState } from "react";
 
 export default function Home({}) {
   const [data, setData] = useState({
-    success: [],
-    failure: [],
+    messages: [],
   });
   const [customerId, setCustomerId] = useState("");
   const [accountId, setAccountId] = useState("");
@@ -65,14 +63,7 @@ export default function Home({}) {
           Submit
         </button>
       </form>
-      <div className="mt-4 max-w-lg">
-        {data && data.success && data.success.length > 0 && (
-          <SuccessMessages messages={data.success} />
-        )}
-        {data && data.failure && data.failure.length > 0 && (
-          <FailureMessages messages={data.failure} />
-        )}
-      </div>
+      <MessagesDiv messages={data.messages} />
     </div>
   );
 }

@@ -12,16 +12,18 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @RestControllerAdvice
 public class ControllerAdvices extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler({RecordNotfoundException.class})
-    protected ResponseEntity<Object> handleRecordNotFoundException(RecordNotfoundException ex, WebRequest req) {
-        ErrorResponse errorResponse = new ErrorResponse(ex.getMessage());
-        return handleExceptionInternal(ex, errorResponse, new HttpHeaders(), HttpStatus.NOT_FOUND, req);
+    private ResultMsg result(RuntimeException ex) {
+        return new ResultMsg().error(ex.getMessage());
     }
 
-    @ExceptionHandler({DataAccessException.class})
+    @ExceptionHandler({ RecordNotfoundException.class })
+    protected ResponseEntity<Object> handleRecordNotFoundException(RecordNotfoundException ex, WebRequest req) {
+        return handleExceptionInternal(ex, result(ex), new HttpHeaders(), HttpStatus.NOT_FOUND, req);
+    }
+
+    @ExceptionHandler({ DataAccessException.class })
     protected ResponseEntity<Object> handleDataAccessException(DataAccessException ex, WebRequest req) {
-        ErrorResponse errorResponse = new ErrorResponse(ex.getMessage());
-        return handleExceptionInternal(ex, errorResponse, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, req);
+        return handleExceptionInternal(ex, result(ex), new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, req);
     }
 
 }
