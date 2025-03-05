@@ -117,16 +117,16 @@
           </execution>
           <execution>
             <id>unpack</id>
-            <phase>package</phase>
+            <phase>test</phase>
             <goals>
               <goal>unpack</goal>
             </goals>
             <configuration>
               <artifactItems>
                 <artifactItem>
-                  <groupId>${project.groupId}</groupId>
+                  <groupId>${project.parent.groupId}</groupId>
                   <artifactId>front</artifactId>
-                  <version>${project.version}</version>
+                  <version>${project.parent.version}</version>
                   <type>zip</type>
                   <classifier>src</classifier>
                   <outputDirectory>${project.basedir}/target/classes/static</outputDirectory>
