@@ -1,12 +1,14 @@
 {
-    "java.configuration.updateBuildConfiguration": "automatic",
-    "java.compile.nullAnalysis.mode": "automatic",
-    "terminal.integrated.rightClickBehavior": "paste",
-    "terminal.integrated.copyOnSelection": true,
-    "files.watcherExclude": {
-        "**/target": true
-    },
-    "cSpell.words": [
-        "jdbc"
-    ]
+  "java.configuration.updateBuildConfiguration": "automatic",
+  "java.compile.nullAnalysis.mode": "automatic",
+  "terminal.integrated.rightClickBehavior": "paste",
+  "terminal.integrated.copyOnSelection": true,
+  "files.watcherExclude": {
+    "**/target": true
+  },
+  "cSpell.words": ["jdbc"],
+  "[xml]": {
+    "editor.defaultFormatter": "redhat.vscode-xml",
+    "editor.tabSize": 2
+  }
 }
