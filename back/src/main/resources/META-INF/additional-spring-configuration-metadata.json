@@ -1,0 +1,5 @@
+{"properties": [{
+  "name": "server.http.port",
+  "type": "java.lang.Integer",
+  "description": "http port for server when running in dev mode"
+}]}
