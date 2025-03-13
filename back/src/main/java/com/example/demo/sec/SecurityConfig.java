@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,6 +15,8 @@ import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.HttpStatusEntryPoint;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,15 +31,17 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        SimpleUrlAuthenticationFailureHandler handler = new SimpleUrlAuthenticationFailureHandler("/");
         http.csrf(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/index.html", "/404.html", "/403.html", "/css/**", "/js/**", "/images/**")
+                        .requestMatchers("/", "/logout", "/css/**", "/js/**", "/images/**")
                         .permitAll()
                         .anyRequest().authenticated())
+                .exceptionHandling(e -> e.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
                 .oauth2Login(oauth2 -> oauth2
                         .userInfoEndpoint(info -> info.oidcUserService(oidcUserService(jdbcClient)))
                         .failureHandler((req, res, ex) -> {
-                            res.sendRedirect("/403.html");
+                            handler.onAuthenticationFailure(req, res, ex);
                         }))
                 .logout(logout -> logout.logoutSuccessUrl("/"));
         return http.build();
