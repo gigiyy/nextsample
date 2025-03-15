@@ -1,22 +1,26 @@
 package com.example.demo.sec;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserRequest;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
+import org.springframework.security.oauth2.client.registration.ClientRegistration.ProviderDetails;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
-import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
+import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.HttpStatusEntryPoint;
-import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
+import org.springframework.util.StringUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -31,18 +35,14 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        SimpleUrlAuthenticationFailureHandler handler = new SimpleUrlAuthenticationFailureHandler("/");
         http.csrf(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/logout", "/css/**", "/js/**", "/images/**")
+                        .requestMatchers("/favicon.ico", "/css/**", "/js/**", "/images/**")
                         .permitAll()
                         .anyRequest().authenticated())
-                .exceptionHandling(e -> e.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
-                .oauth2Login(oauth2 -> oauth2
-                        .userInfoEndpoint(info -> info.oidcUserService(oidcUserService(jdbcClient)))
-                        .failureHandler((req, res, ex) -> {
-                            handler.onAuthenticationFailure(req, res, ex);
-                        }))
+                .oauth2Login(
+                        oauth2 -> oauth2
+                                .userInfoEndpoint(info -> info.oidcUserService(oidcUserService(jdbcClient))))
                 .logout(logout -> logout.logoutSuccessUrl("/"));
         return http.build();
     }
@@ -51,13 +51,23 @@ public class SecurityConfig {
         OidcUserService delegate = new OidcUserService();
         return userRequest -> {
             OidcUser user = delegate.loadUser(userRequest);
+            log.info("user: {}", user);
             String name = user.getPreferredUsername();
             String select = "select count(*) from user where user_id = ? and user_role = 'admin'";
-            log.info("{}", user);
+            Set<GrantedAuthority> authorities = new HashSet<>();
             int count = jdbcClient.sql(select).param(name).query(Integer.class).single();
-            if (count == 0) {
-                throw new OAuth2AuthenticationException("User is not an admin");
+            if (count > 0) {
+                authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
             }
+            authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+            ProviderDetails providerDetails = userRequest.getClientRegistration().getProviderDetails();
+            String userNameAttributeName = providerDetails.getUserInfoEndpoint().getUserNameAttributeName();
+            if (StringUtils.hasText(userNameAttributeName)) {
+                user = new DefaultOidcUser(authorities, user.getIdToken(), user.getUserInfo(), userNameAttributeName);
+            } else {
+                user = new DefaultOidcUser(authorities, user.getIdToken(), user.getUserInfo());
+            }
+            log.info("user {}", user);
             return user;
         };
     }
