@@ -117,7 +117,7 @@
           </execution>
           <execution>
             <id>unpack</id>
-            <phase>test</phase>
+            <phase>package</phase>
             <goals>
               <goal>unpack</goal>
             </goals>
