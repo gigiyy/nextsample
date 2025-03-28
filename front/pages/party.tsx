@@ -1,3 +1,4 @@
+import Button from "@/components/Button";
 import MessagesDiv from "@/components/messages";
 import { getCsrfToken } from "@/services/csrfService";
 import axios from "axios";
@@ -59,9 +60,7 @@ export default function Home({}) {
             className="p-1 border border-gray-300 rounded mb-2"
           />
         </div>
-        <button type="submit" className="p-2 bg-blue-500 text-white rounded">
-          Submit
-        </button>
+        <Button type="submit">Submit</Button>
       </form>
       <MessagesDiv messages={data.messages} />
     </div>

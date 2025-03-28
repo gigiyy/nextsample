@@ -29,7 +29,8 @@ export default function Home({}) {
       });
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     const csrfToken = await getCsrfToken();
     axios
       .put("/api/dtr/cashPosting", null, {
@@ -49,15 +50,17 @@ export default function Home({}) {
       <h1 className="text-2xl font-bold mb-4">
         Cash Position Trigger Flag Update
       </h1>
-      <div className="p-2">
-        <input
-          type="date"
-          value={date}
-          onChange={(e) => handleRefresh(e.target.value)}
-          className="p-2 text-lg border border-gray-300 rounded mr-2" // Tailwind CSS classes
-        />
-        <Button onClick={handleSubmit}>Enable Cash Posting</Button>
-      </div>
+      <form onSubmit={handleSubmit}>
+        <div className="p-2">
+          <input
+            type="date"
+            value={date}
+            onChange={(e) => handleRefresh(e.target.value)}
+            className="p-2 text-lg border border-gray-300 rounded mr-2" // Tailwind CSS classes
+          />
+          <Button type="submit">Enable Cash Posting</Button>
+        </div>
+      </form>
       <CashPosting {...data} />
       <MessagesDiv messages={data?.messages} />
     </div>

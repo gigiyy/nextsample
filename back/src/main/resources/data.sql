@@ -3,9 +3,9 @@ insert into cash_posting values ('2025-03-12', 'Y');
 insert into cash_posting values ('2025-03-13', 'N');
 
 
-insert into cash_posting values ('2025-02-19', 'Y');
-insert into cash_posting values ('2025-02-20', 'Y');
-insert into cash_posting values ('2025-02-21', 'N');
+insert into cash_posting values ('2025-03-19', 'Y');
+insert into cash_posting values ('2025-03-20', 'Y');
+insert into cash_posting values ('2025-03-21', 'N');
 
 insert into user values ('guixin', 'user');
 insert into user values ('shu', 'user');
